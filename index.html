@@ -406,6 +406,10 @@ const P={
 function goTo(n){if(n<1||n>T||n===c)return;document.getElementById('s'+c).classList.remove('active');document.getElementById('d'+c).classList.remove('on');c=n;document.getElementById('s'+c).classList.add('active');document.getElementById('d'+c).classList.add('on');var sn=document.getElementById('sn');if(c===6){sn.style.display='none';}else{sn.style.display='';sn.textContent='Step '+c+' of 5';}const p=P[c],av=document.getElementById('sp-av');av.textContent=p.init;av.className='pres-persona-avatar '+p.cls;document.getElementById('sp-name').textContent=p.name;document.getElementById('sp-role').textContent=p.role;document.getElementById('pb').disabled=c===1;document.getElementById('nb').disabled=c===T;}
 function go(d){const n=c+d;if(n<1||n>T)return;document.getElementById('s'+c).classList.remove('active');document.getElementById('d'+c).classList.remove('on');c=n;document.getElementById('s'+c).classList.add('active');document.getElementById('d'+c).classList.add('on');var sn=document.getElementById('sn');if(c===6){sn.style.display='none';}else{sn.style.display='';sn.textContent='Step '+c+' of 5';}const p=P[c],av=document.getElementById('sp-av');av.textContent=p.init;av.className='pres-persona-avatar '+p.cls;document.getElementById('sp-name').textContent=p.name;document.getElementById('sp-role').textContent=p.role;document.getElementById('pb').disabled=c===1;document.getElementById('nb').disabled=c===T;}
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')go(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')go(-1);});
+/* Recapture focus from iframes when clicking outside them */
+document.addEventListener('click',e=>{if(e.target.tagName!=='IFRAME')window.focus();});
+/* Also try to capture arrow keys even when iframe has focus */
+window.addEventListener('blur',()=>{setTimeout(()=>{window.addEventListener('keydown',function refocus(e){if(['ArrowRight','ArrowLeft','ArrowUp','ArrowDown'].includes(e.key)){window.focus();window.removeEventListener('keydown',refocus);}},{capture:true});},100);});
 
 /* ── Slide 4: Copy to clipboard interaction ── */
 function s4Copy(){
